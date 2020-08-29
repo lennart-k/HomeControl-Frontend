@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -e
+cd "$(dirname $(readlink -f "$0"))/.."
+
+# NODE_ENV=development ./scripts/parcel.bundle.js
+NODE_ENV=development ./node_modules/webpack-cli/bin/cli.js

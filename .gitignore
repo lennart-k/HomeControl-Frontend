@@ -1,0 +1,19 @@
+# npm
+node_modules
+
+# setup.py build
+build/
+dist
+homecontrol_frontend.egg-info
+
+# parcel-bundler cache folder
+.cache
+
+# VSCode
+.vscode
+
+# Frontend build folder
+homecontrol_frontend/www
+
+# Cache
+**/__pycache__

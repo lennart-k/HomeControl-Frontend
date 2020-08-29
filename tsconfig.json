@@ -1,0 +1,33 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "strict": true,
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
+        "sourceMap": true,
+        "moduleResolution": "node",
+        "lib": [
+            "es2016",
+            "dom",
+            "ESNext.AsyncIterable",
+            "ES2017.Object"
+        ],
+        "baseUrl": ".",
+        "paths": {
+            "/*": [
+                "src/*"
+            ]
+        }
+    },
+    "include": [
+        "src/**/*.vue",
+        "src/**/*.ts",
+        "src/**/*.js",
+        "src/**/*.svg",
+        "types/vue.d.ts",
+        "types/custom.d.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ],
+}

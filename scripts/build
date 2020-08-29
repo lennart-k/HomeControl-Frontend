@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+cd "$(dirname $(readlink -f "$0"))/.."
+
+echo "Building the frontend"
+
+rm -rf ./homecontrol_frontend/www
+# NODE_ENV=production ./scripts/parcel.bundle.js
+NODE_ENV=production ./node_modules/webpack-cli/bin/cli.js
+
+echo "Packaging the frontend"
+
+python3 setup.py sdist bdist_wheel

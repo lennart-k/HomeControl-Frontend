@@ -1,0 +1,57 @@
+/*
+ vars.sass Here mixins and other functions are stored
+ Classes have to be stored in style.sass or theme.sass
+ as this stylesheet can be imported multiple times
+ */
+
+$theme-transition-duration: .3s
+$border-radius: 6px
+
+@mixin app-background
+  background: var(--app-background)
+  transition: background #{$theme-transition-duration}
+
+@mixin secondary-background
+  background: var(--secondary-background)
+  transition: background #{$theme-transition-duration}
+
+@mixin topbar-background
+  background: var(--topbar-background)
+  transition: background #{$theme-transition-duration}
+
+@mixin primary-accent-color-background
+  background: var(--primary-accent-color)
+  transition: background #{$theme-transition-duration}
+
+@mixin color-on-primacy-accent-color
+  color: var(--color-on-primary)
+
+@mixin primary-accent-color
+  color: var(--primary-accent-color)
+
+@mixin font-color
+  color: var(--font-color)
+
+@mixin secondary-font-color
+  color: var(--secondary-font-color)
+
+@mixin light-shadow
+  box-shadow: 2px 2px 12px 0px rgba(0,0,0,0.2)
+
+@mixin rounded-corners
+  border-radius: #{$border-radius}
+
+@mixin highlight-background
+  background: var(--highlight-background)
+  transition: background #{$theme-transition-duration}
+
+@mixin selected-background
+  background: var(--selected-background)
+  transition: background #{$theme-transition-duration}
+
+@mixin hover-background
+  transition: background #{$theme-transition-duration}
+
+  &:hover
+    transition: none
+    background: var(--highlight-background)

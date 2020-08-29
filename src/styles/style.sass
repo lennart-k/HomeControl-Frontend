@@ -1,0 +1,30 @@
+@import "/styles/vars"
+
+html
+  @include app-background
+
+body
+  margin: 0
+  @include app-background
+
+.app
+  font-family: -apple-system, "Inter", sans-serif
+  font-weight: 400
+  font-size: 16px
+  min-height: 100vh
+  @include font-color
+  @include app-background
+
+@supports (font-variation-settings: normal)
+  .app
+    font-family: 'Inter var', sans-serif
+
+h1
+  font-size: 2em
+  font-weight: 600
+
+h2
+  font-weight: 600
+
+*
+  box-sizing: border-box

@@ -1,0 +1,47 @@
+#!/usr/bin/env python3
+
+import os
+import re
+import sys
+from datetime import datetime
+from subprocess import Popen
+
+PROJECT_FOLDER = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SETUP_PATH = PROJECT_FOLDER + "/setup.py"
+
+VERSION_PATTERN = r"version=\"(.+)\.(\d+)\""
+
+
+def date_string() -> str:
+    return datetime.now().strftime("%Y%m%d")
+
+with open(SETUP_PATH) as setup_read:
+    content = setup_read.read()
+    match = re.search(VERSION_PATTERN, content)
+    if not match:
+        print("Couldn't match version in setup.py", file=sys.stderr)
+        exit(1)
+
+    date_now = date_string()
+    date, old_rev = match.groups()
+    rev = int(old_rev) + 1 if date == date_now else 0
+    new_version = f"{date_now}.{rev}"
+    new_setup = re.sub(VERSION_PATTERN, f"version=\"{new_version}\"", content)
+
+with open(SETUP_PATH, "w") as setup_write:
+    setup_write.write(new_setup)
+
+print(
+    "Bumped the version\n"
+    f"From: {date}.{old_rev}\n"
+    f"To:   {new_version}"
+)
+
+process = Popen(["git", "commit", "-am", f"Bumped version to {new_version}"])
+process.communicate()
+process = Popen(["git", "tag", f"v{new_version}"])
+process.communicate()
+process = Popen(["git", "push"])
+process.communicate()
+process = Popen(["git", "push", "--tags"])
+process.communicate()
