@@ -21,7 +21,7 @@ module.exports = {
     publicPath: '/frontend/',
   },
   watch: !production,
-  devtool: 'source-map',
+  devtool: production ? 'source-map' : 'eval',
   target: 'web',
   mode: NODE_ENV,
   optimization: {
