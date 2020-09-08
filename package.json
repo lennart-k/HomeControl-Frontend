@@ -76,7 +76,7 @@
     "@material/mwc-select": "^0.18.0",
     "@material/mwc-switch": "^0.18.0",
     "@material/mwc-textfield": "^0.18.0",
-    "homecontrol-js": "^1.1.0",
+    "homecontrol-js": "^1.2.0",
     "lodash": "^4.17.20",
     "marked": "^1.1.1",
     "material-design-icons": "^3.0.1",
