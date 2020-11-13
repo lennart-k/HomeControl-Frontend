@@ -23,7 +23,7 @@ export default class extends Vue {
 }
 </script>
 <style lang="sass" scoped>
-.item-list-view
+.module-list-view
   padding: 12px
   width: 100%
   min-height: 300vh
