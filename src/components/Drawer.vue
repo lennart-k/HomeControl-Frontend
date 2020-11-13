@@ -42,12 +42,6 @@
       to="/config",
       href="/frontend/config"
     ) Settings
-    DrawerButton(
-      icon="gavel",
-      :collapsed="collapsed",
-      to="/licenses",
-      href="/frontend/licenses"
-    ) Licenses
 </template>
 <script lang="ts">
 import Vue from "vue"

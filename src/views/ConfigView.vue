@@ -2,11 +2,11 @@
 .config-view
   h1 Configuration
   section
-    h3 Core
+    h2 Core
     mwc-button(@click="restartCore", outlined) Restart
     mwc-button(@click="shutdownCore", outlined) Shutdown
   section
-    h3 Theme
+    h2 Theme
       mwc-select(
         v-model="theme",
         :value="theme",
@@ -18,6 +18,11 @@
           v-for="(themeName, themeId) in themes",
           :key="themeId"
         )
+
+  section
+    h2 Licenses
+
+    router-link(to="/licenses", href="/frontend/licenses") Licenses
 </template>
 <script lang="ts">
 import Vue from "vue"
