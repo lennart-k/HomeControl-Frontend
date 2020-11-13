@@ -42,6 +42,7 @@ export default class extends Vue {
   theme?: string
 
   onMapReady() {
+    // @ts-ignore
     this.map = this.$refs.map.mapObject as leaflet.Map
     this.updateTileLayer()
   }

@@ -11,6 +11,7 @@ export default class extends Vue {
   hasContent: boolean = false
 
   mounted() {
+    // @ts-ignore
     this.hasContent = Boolean(this.$refs.portal.passengers.length)
   }
 
