@@ -5,9 +5,15 @@
     :columns="columns",
     :data="Array.from($homeControl.items.values())"
   )
+    template(v-slot:col(name)="{ dataset: item }")
+      router-link(
+        :to="{ name: 'item', params: { id: item.uniqueIdentifier } }",
+        v-text="item.name"
+      )
 </template>
 <script lang="ts">
 import Vue from 'vue'
+
 import DataTable from '/components/ui/DataTable.vue'
 
 import { Component } from 'vue-typed'
@@ -28,5 +34,6 @@ export default class extends Vue {
 .item-list-view
   padding: 12px
   width: 100%
-  min-height: 300vh
+a
+  @include font-color
 </style>
