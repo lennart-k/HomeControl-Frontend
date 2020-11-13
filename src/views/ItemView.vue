@@ -2,6 +2,8 @@
 .item-view
   h1(v-text="item.name")
   h2(v-text="item.identifier")
+  p(v-text="item.implements")
+  p(v-text="status")
   .card-container
     BaseWidget.states
       h2 States
