@@ -1,17 +1,22 @@
 <template lang="pug">
-table.data-table
+table.data-table(ref="table")
+  tr
+    th(
+      v-for="(column, index) in columns",
+      @click="onHeaderClick",
+      :column="index",
+      :class="{ sorting: sort && sort.column == column }"
+    )
+      MaterialIcon arrow_upwards
+      span(v-text="column.label")
+  tr(v-if="order", v-for="index in order")
+    slot(name="row", :dataset="data[index]")
+      td(v-for="column in columns")
+        slot(:name="`col(${column.field})`", :dataset="data[index]") {{ renderCell(column, data[index]) }}
+
+  slot(v-else, name="placeholder")
     tr
-        th(v-for="column, index in columns"
-           @click="onHeaderClick"
-           :column="index"
-           :class="{sorting: sort && sort.column == column}")
-            MaterialIcon arrow_upwards
-            span(v-text="column.label")
-    tr(v-for="index in order")
-        td(v-for="column in columns" v-html="renderCell(column, data[index])")
-    slot(name="placeholder" v-if="!order")
-        tr
-            td(:colspan="columns.length") No data to view...
+      td(:colspan="columns.length") No data to view...
 </template>
 <script lang="ts">
 import Vue from 'vue'
@@ -41,6 +46,9 @@ export default class extends Vue {
 
   @Prop()
   data: Array<any> = []
+
+  @Prop()
+  template?: Vue
 
   order?: Array<number> = undefined
   sort?: Sort = undefined
