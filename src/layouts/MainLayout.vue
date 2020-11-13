@@ -5,7 +5,9 @@
     :class="{ drawerExpanded, fullscreen, mobileLayout }"
   )
     .topbar-slot(v-if="!fullscreen")
-      Topbar(v-slot="topbar")
+      Topbar(v-bind="{ mobileLayout }")
+    .bottombar-slot(v-if="!fullscreen && mobileLayout")
+      BottomBar
     .drawer-slot(v-if="!fullscreen")
       Drawer(v-slot="drawer", :floating="mobileLayout")
     .drawer-scrim(
@@ -17,18 +19,18 @@
       router-view
   LoadingSpinner(v-else, message="Connecting")
 </template>
-
 <script lang="ts">
 import Vue from 'vue'
 import Topbar from '/components/Topbar.vue'
 import Drawer from '/components/Drawer.vue'
+import BottomBar from '/components/BottomBar.vue'
 import { sync, get } from "vuex-pathify"
 import { Component } from 'vue-typed'
 
 import LoadingSpinner from '/components/LoadingSpinner.vue'
 
 @Component({
-  components: { Topbar, Drawer, LoadingSpinner },
+  components: { Topbar, Drawer, LoadingSpinner, BottomBar },
   computed: {
     drawerExpanded: sync('drawerExpanded')
   }
@@ -67,11 +69,16 @@ export default class extends Vue {
     position: fixed
     top: 0
     width: 100%
+    z-index: 6
+
+  .bottombar-slot
+    position: fixed
+    bottom: 0
+    width: 100%
     z-index: 4
 
   .drawer-slot
     min-width: 60px
-    margin-right: 16px
     transition: min-width .2s ease-out
     height: 100%
     overflow: hidden
@@ -79,7 +86,7 @@ export default class extends Vue {
   &.mobileLayout .drawer-slot
     position: fixed
     top: 0
-    z-index: 3
+    z-index: 5
     left: -360px
     margin-right: 0
     overflow-x: hidden
@@ -95,6 +102,7 @@ export default class extends Vue {
   .content-slot
     margin-top: 60px
     flex: 1 1 auto
+    overflow-y: auto
 
   .drawer-scrim
     position: fixed
