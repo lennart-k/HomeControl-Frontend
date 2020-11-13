@@ -1,11 +1,11 @@
-<template>
-  <div class="dashboard">
-    <component
+<template lang="pug">
+  .dashboard
+    component(
       :is="sectionTypes[section.type]"
       :configuration="section.configuration"
       v-for="(section, index) in configuration.sections"
       :key="index"
-    ></component>
+    )
   </div>
 </template>
 <script lang="ts">
