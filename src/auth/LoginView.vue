@@ -1,6 +1,6 @@
 <template lang="pug">
 .login-view
-  img.logo(:src="logo")
+  img.logo(:src="logo", width="400px", height="400px")
   h1.title HomeControl
   div(v-if="!selectedProvider")
     router-link(
