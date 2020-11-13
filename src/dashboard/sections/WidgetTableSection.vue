@@ -5,7 +5,7 @@
       <component
         v-for="(widget, index) in column.widgets"
         :is="widgetTypes[widget.type]"
-        v-bind="widget.configuration"
+        v-bind="widget"
         :key="index"
       ></component>
     </div>
