@@ -5,7 +5,7 @@ BaseWidget.media-player-widget(v-if="online")
     span(v-text="item.name")
   .info-container
     span.title(v-text="title", :title="title")
-    span.artist(v-text="artist", :title="artist")
+    span.artist(v-text="`${artist} - ${album}`", :title="artist")
   .button-group
     mwc-icon-button(@click="previous()", icon="skip_previous")
     mwc-icon-button(
