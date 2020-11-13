@@ -6,10 +6,22 @@ const TerserPlugin = require('terser-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const WebpackPwaManifest = require('webpack-pwa-manifest')
-
+const Visualizer = require('webpack-visualizer-plugin')
+const DuplicatePackageCheckerPlugin = require("duplicate-package-checker-webpack-plugin")
+const WorkboxPlugin = require('workbox-webpack-plugin')
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin')
 
 const NODE_ENV = process.env.NODE_ENV || 'development'
 const production = (process.env.NODE_ENV === 'production')
+
+const postCssConfig = {
+  loader: 'postcss-loader',
+  options: {
+    postcssOptions: {
+      plugins: ['autoprefixer', 'cssnano']
+    }
+  }
+}
 
 
 module.exports = {
@@ -67,6 +79,7 @@ module.exports = {
             }
           },
           'css-loader',
+          postCssConfig,
           {
             loader: 'sass-loader',
             options: {
@@ -91,19 +104,17 @@ module.exports = {
               hmr: !production
             }
           },
-          'css-loader'
+          'css-loader',
+          postCssConfig
         ]
       },
       {
         test: /\.vue$/,
-        loader: 'vue-loader'
+        loader: 'vue-loader',
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
-        options: {
-          presets: ['@babel/preset-env']
-        }
+        loader: 'babel-loader'
       },
       {
         test: /\.tsx?$/,
@@ -116,7 +127,7 @@ module.exports = {
         ]
       },
       {
-        test: /\.(woff(2)?|ttf|eot|svg|txt|png)(\?v=\d+\.\d+\.\d+)?$/,
+        test: /\.(woff(2)?|ttf|otf|eot|svg|txt|png)(\?v=\d+\.\d+\.\d+)?$/,
         use: [
           {
             loader: 'file-loader',
@@ -134,6 +145,7 @@ module.exports = {
     roots: [path.resolve('./src')]
   },
   plugins: [
+    new Visualizer({ filename: './bundlestats.html' }),
     new ManifestPlugin(),
     new CleanWebpackPlugin(),
     new VueLoaderPlugin(),
@@ -150,10 +162,11 @@ module.exports = {
       name: 'HomeControl Template Manifest',
       description: "HomeControl will fill in the fields",
       filename: 'manifest.webmanifest',
+      ios: true,
       icons: [
         {
           src: path.resolve('src/assets/branding/logo.png'),
-          sizes: [120, 152, 167, 180, 1024],
+          sizes: [48, 120, 152, 167, 180, 192, 512, 1024],
           destination: 'static',
           ios: true
         },
@@ -161,14 +174,23 @@ module.exports = {
           src: path.resolve('src/assets/branding/logo.png'),
           size: 1024,
           destination: 'static',
-          ios: 'startup'
-        },
-        {
-          src: path.resolve('src/assets/branding/logo.png'),
-          sizes: [36, 48, 72, 96, 144, 192, 512],
-          destination: 'static'
+          ios: 'startup',
+          purpose: 'any maskable'
         }
       ]
+    }),
+    new DuplicatePackageCheckerPlugin(),
+    new WorkboxPlugin.InjectManifest({
+      swSrc: path.join(__dirname, 'src/sw.js'),
+      swDest: path.join(__dirname, 'homecontrol_frontend/www/sw.js'),
+      dontCacheBustURLsMatching: /static/,
+      manifestTransforms: [
+        async (manifestEntries) => {
+          const manifest = manifestEntries.filter(entry => entry.url !== '/frontend/index.html')
+          return { manifest }
+        }
+      ],
+      maximumFileSizeToCacheInBytes: 10 * 1024 * 1024
     })
   ]
 }

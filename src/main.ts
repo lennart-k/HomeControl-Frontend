@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 import { homeControl, authContext } from '/api/homeControl'
 
-import 'typeface-inter'
+
 import '/styles/style.sass'
 
 Vue.config.productionTip = false
@@ -18,6 +18,12 @@ import '@material/mwc-select'
 import '@material/mwc-list/mwc-list-item'
 import '@material/mwc-switch'
 import '@material/mwc-linear-progress'
+import '@material/mwc-tab'
+import '@material/mwc-tab-bar'
+
+
+import PortalVue from 'portal-vue'
+Vue.use(PortalVue)
 
 
 let app = new Vue({
@@ -33,3 +39,22 @@ let app = new Vue({
 
 window.app = app
 window.homeControl = homeControl
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', async () => {
+    try {
+      let registration = await navigator.serviceWorker.register('/frontend/sw.js', {
+        scope: '/frontend'
+      })
+      registration.addEventListener('updatefound', () => {
+        const installingWorker = registration.installing
+
+        if (!installingWorker) return
+
+        installingWorker.postMessage({ type: 'skipWaiting' })
+      })
+    } catch (e) {
+      console.log('SW registration failed: ', e)
+    }
+  })
+}
