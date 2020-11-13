@@ -86,7 +86,7 @@ export default class extends Vue {
   &.expanded:hover .new-tab-indicator
     opacity: 0.8
 
-  &.router-link-exact-active
+  &.router-link-active
     @include color-on-primacy-accent-color
     @include primary-accent-color-background
 </style>
