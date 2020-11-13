@@ -4,7 +4,7 @@
     DrawerButton(
       icon="home",
       :collapsed="collapsed",
-      :to="{ name: 'dashboard', params: { id: 'main' } }",
+      :to="{ name: 'dashboard' }",
       href="/frontend"
     ) Home
 
@@ -29,6 +29,12 @@
       to="/items",
       href="/frontend/items"
     ) Items
+    DrawerButton(
+      icon="map",
+      :collapsed="collapsed",
+      to="/map",
+      href="/frontend/map"
+    ) Map
   .bottom
     DrawerButton(
       icon="people",
@@ -64,10 +70,14 @@ export default class extends Vue {
   floating: boolean = false
 
   collapse() {
+    console.log(this.floating, this.expanded)
     if (this.floating) {
       this.expanded = false
     }
   }
+
+  @Watch('$route')
+  onRouteChange() { this.collapse() }
 }
 </script>
 <style lang="sass" scoped>
@@ -83,6 +93,7 @@ export default class extends Vue {
   background: var(--secondary-background)
   display: flex
   flex-direction: column
+  overflow-y: auto
 
   .bottom
     margin-top: auto
