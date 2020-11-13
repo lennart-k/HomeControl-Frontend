@@ -1,23 +1,36 @@
 <template lang="pug">
-.topbar
-  .justify-left
-    button(@click="toggleDrawer" ripple).hamburger-button
+.topbar(:class="{ drawerExpanded }")
+  .left
+    button.hamburger-button(@click="toggleDrawer", ripple)
       MaterialIcon menu
-  .justify-right
+
+  PortalTarget.middle(v-if="renderPortal", name="tab-nav")
 </template>
 <script lang="ts">
 import Vue from "vue"
-import { Component } from 'vue-typed'
+import { Component, Prop, Watch } from 'vue-typed'
 import MaterialIcon from '/components/MaterialIcon.vue'
-import { call } from "vuex-pathify"
+import { call, get } from "vuex-pathify"
 
 @Component({
   methods: {
     toggleDrawer: call('toggleDrawer')
   },
+  computed: { drawerExpanded: get('drawerExpanded') },
   components: { MaterialIcon }
 })
-export default class extends Vue { }
+export default class extends Vue {
+  @Prop() mobileLayout?: boolean = true
+  renderPortal?: boolean = false
+
+  mounted() {
+    this.renderPortal = !this.mobileLayout
+  }
+  @Watch('mobileLayout')
+  onLayoutChange() {
+    this.renderPortal = !this.mobileLayout
+  }
+}
 </script>
 <style lang="sass" scoped>
 @import '/styles/vars'
@@ -29,21 +42,26 @@ export default class extends Vue { }
   height: 60px
   z-index: 100
   padding: 0 10px
-  display: flex
   align-items: center
   background: var(--topbar-background)
   box-shadow: 0px -5px 20px 0px rgba(0, 0, 0, .2)
+  display: flex
+  gap: 6px
 
   span
     font-size: 1.2em
     font-weight: 450
 
-  .justify-left, .justify-right
+  &.drawerExpanded .left
+    min-width: 244px
+
+  .left, .middle, .right
     display: flex
     align-items: center
     height: 100%
+    min-width: 44px
 
-  .justify-right
+  .right
     margin-left: auto
 
   .hamburger-button
