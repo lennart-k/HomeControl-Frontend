@@ -5,6 +5,7 @@
         "experimentalDecorators": true,
         "allowSyntheticDefaultImports": true,
         "sourceMap": true,
+        "module": "es2020",
         "moduleResolution": "node",
         "lib": [
             "es2016",
