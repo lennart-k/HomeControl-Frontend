@@ -14,6 +14,7 @@ export default class extends Vue { }
 
 .widget
   display: flex
+  box-shadow: 2px 2px 15px 0px rgba(0, 0, 0, .05)
   margin: 8px
   min-height: 100px
   border-radius: 6px
@@ -22,6 +23,5 @@ export default class extends Vue { }
   flex: 1 1
   box-sizing: border-box
   contain: content
-  @include light-shadow
   @include secondary-background
 </style>
