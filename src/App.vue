@@ -1,5 +1,6 @@
 <template lang="pug">
 .app(:theme="theme")
+  notifications
   router-view
 </template>
 <script lang="ts">
@@ -7,10 +8,14 @@ import Vue from 'vue'
 import { Component, Watch } from 'vue-typed'
 import { sync } from 'vuex-pathify'
 import '/styles/theme'
+import Notifications from '/components/Notifications.vue'
 
 @Component({
   computed: {
     theme: sync('theme')
+  },
+  components: {
+    Notifications
   }
 })
 export default class App extends Vue {
