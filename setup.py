@@ -4,7 +4,7 @@ from setuptools import setup, find_namespace_packages
 
 setup(
     name="homecontrol_frontend",
-    version="20201213.0",
+    version="20201213.1",
     url="https://github.com/lennart-k/HomeControl-Frontend",
     author="Lennart K",
     description="The frontend for HomeControl",
