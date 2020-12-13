@@ -5,6 +5,12 @@ html
     meta(name="theme-color" content="blue")
     meta(name="color-scheme" content="dark light")
     meta(name="viewport" content="width=device-width, initial-scale=1, user-scalable=no")
-
+    | {% for style in styles %}
+    |   {% if style.href is defined %}
+    |     <link rel="stylesheet" href="{{ style.href }}" />
+    |   {% else %}
+    |     <style>{{ style }}</style>
+    |   {% endif %}
+    | {% endfor %}
   body
     #app-mount
